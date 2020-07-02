@@ -6,7 +6,6 @@
     >
       <div
         class="layui-tab layui-tab-brief"
-        lay-filter="user"
       >
         <ul class="layui-tab-title">
           <li class="layui-this">
@@ -107,7 +106,7 @@
                           <span
                             class="svg"
                             style="color: #c00;"
-                            @click="_getCode"
+                            @click="_getCode()"
                             v-html="svg"
                           />
                         </div>
@@ -156,6 +155,7 @@
 <script>
 import { ValidationProvider, ValidationObserver } from '@/utils/utils'
 import { getCode } from '@/api/login'
+import { v4 as uuid } from 'uuid'
 export default {
   name: 'Login',
   data () {
@@ -171,11 +171,21 @@ export default {
     ValidationObserver
   },
   mounted () {
-    this._getCode()
+    let sid = ''
+    if (localStorage.getItem('sid')) {
+      sid = localStorage.getItem('sid')
+    } else {
+      sid = uuid()
+      localStorage.setItem('sid', sid)
+    }
+    this.$store.commit('setSid', sid)
+    console.log(sid)
+    this._getCode(sid)
   },
   methods: {
-    _getCode () {
-      getCode().then(res => {
+    _getCode (sid) {
+      console.log(sid, 555)
+      getCode(sid).then(res => {
         if (res.code === 200) {
           this.svg = res.data
         }

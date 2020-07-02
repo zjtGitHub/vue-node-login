@@ -1,18 +1,19 @@
-import axios from 'axios'
+import axios from '@/utils/request'
 
-const getCode = async () => {
-  let result = ''
-  try {
-    result = await axios.get('/getCaptcha')
-    if (result.status === 200) {
-      return result.data
+const getCode = (sid) => {
+  return axios.get('/getCaptcha', {
+    params: {
+      sid: sid
     }
-  } catch (e) {
-    console.log(e)
-  }
-  return result
+  })
 }
 
+const forget = (option) => {
+  return axios.get('/forget', {
+    ...option
+  })
+}
 export {
-  getCode
+  getCode,
+  forget
 }
