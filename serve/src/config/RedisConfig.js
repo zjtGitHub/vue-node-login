@@ -38,6 +38,7 @@ const setValue = (key, value, time) => {
     return
   }
   if (typeof value === 'string') {
+    // 如果存在time就设置过期时间
     if (typeof time !== 'undefined') {
       client.set(key, value, 'EX', time)
     } else {

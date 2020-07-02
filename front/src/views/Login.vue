@@ -154,7 +154,7 @@
 
 <script>
 import { ValidationProvider, ValidationObserver } from '@/utils/utils'
-import { getCode } from '@/api/login'
+import { getCode, login } from '@/api/login'
 import { v4 as uuid } from 'uuid'
 export default {
   name: 'Login',
@@ -179,11 +179,11 @@ export default {
       localStorage.setItem('sid', sid)
     }
     this.$store.commit('setSid', sid)
-    this._getCode(sid)
+    this._getCode()
   },
   methods: {
-    _getCode (sid) {
-      console.log(sid)
+    _getCode () {
+      const sid = this.$store.state.sid
       getCode(sid).then(res => {
         if (res.code === 200) {
           this.svg = res.data
@@ -191,6 +191,16 @@ export default {
       })
     },
     onSubmit () {
+      login({
+        username: this.username,
+        password: this.password,
+        code: this.code,
+        sid: this.$store.state.sid
+      }).then((res) => {
+        if (res.code === 200) {
+          console.log(res)
+        }
+      })
       alert('提交成功')
     }
   }

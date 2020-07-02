@@ -1,5 +1,5 @@
 import svgCaptcha from 'svg-captcha'
-import { getValue, setValue } from '../config/RedisConfig'
+import { getValue, setValue } from '@/config/RedisConfig'
 
 class PublicController {
   constructor() { }
@@ -13,8 +13,12 @@ class PublicController {
       width: 150,
       height: 38
     })
-    // 保存图片验证码和超时时间10分钟到redis中
-    setValue(body.sid, newCaptcha.text, 10*60)
+    // 保存图片验证码
+    // 设置超时时间10分钟
+    setValue(body.sid, newCaptcha.text)
+    getValue(body.sid).then((res) => {
+      console.log(666)
+    })
     console.log(body.sid)
     ctx.body = {
       code: 200,
