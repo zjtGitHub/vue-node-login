@@ -179,12 +179,11 @@ export default {
       localStorage.setItem('sid', sid)
     }
     this.$store.commit('setSid', sid)
-    console.log(sid)
     this._getCode(sid)
   },
   methods: {
     _getCode (sid) {
-      console.log(sid, 555)
+      console.log(sid)
       getCode(sid).then(res => {
         if (res.code === 200) {
           this.svg = res.data

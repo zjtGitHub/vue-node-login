@@ -8,7 +8,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const webpackconfig = {
   target: 'node',
   entry: {
-    server: path.join(utils.APP_PATH, 'login.js')
+    server: path.join(utils.APP_PATH, 'index.js')
+  },
+  resolve: {
+    ...utils.getWebpackResolveConfig(),
   },
   output: {
     filename: '[name].bundle.js',
@@ -46,6 +49,6 @@ const webpackconfig = {
   }
 }
 
-// console.log(webpackconfig)
+console.log(webpackconfig)
 
 module.exports = webpackconfig

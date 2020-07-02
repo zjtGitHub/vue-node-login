@@ -8,6 +8,7 @@ class HttpRequest {
 
   // 获取axios配置
   getInsideConfig () {
+    console.log(this.baseUrl)
     const config = {
       baseUrl: this.baseUrl,
       headers: {
@@ -41,6 +42,7 @@ class HttpRequest {
     const instance = axios.create()
     const newOptions = Object.assign(this.getInsideConfig(), options)
     this.interceptors(instance)
+    console.log(newOptions)
     return instance(newOptions)
   }
 
