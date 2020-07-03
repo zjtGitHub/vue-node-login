@@ -203,7 +203,8 @@
 
 <script>
 import { ValidationProvider, ValidationObserver } from '@/utils/utils'
-import { getCode } from '@/api/login'
+import { getCode, reg } from '@/api/login'
+import { v4 as uuid } from 'uuid'
 export default {
   name: 'Reg',
   data () {
@@ -221,18 +222,37 @@ export default {
     ValidationObserver
   },
   mounted () {
+    let sid = ''
+    if (localStorage.getItem('sid')) {
+      sid = localStorage.getItem('sid')
+    } else {
+      sid = uuid()
+      localStorage.setItem('sid', sid)
+    }
+    this.$store.commit('setSid', sid)
     this._getCode()
   },
   methods: {
     _getCode () {
-      getCode().then(res => {
+      const sid = this.$store.state.sid
+      getCode(sid).then(res => {
         if (res.code === 200) {
           this.svg = res.data
         }
       })
     },
     onSubmit () {
-      alert('提交成功')
+      reg({
+        username: this.username,
+        nickname: this.nickname,
+        password: this.password,
+        code: this.code,
+        sid: this.$store.state.sid
+      }).then(res => {
+        if (res.code === 200) {
+          alert('注册成功！')
+        }
+      })
     }
   }
 }

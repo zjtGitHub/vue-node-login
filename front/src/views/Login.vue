@@ -26,7 +26,7 @@
         >
           <div class="layui-tab-item layui-show">
             <div class="layui-form layui-form-pane">
-              <ValidationObserver v-slot="{ handleSubmit }">
+              <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
                 <form @submit.prevent="handleSubmit(onSubmit)">
                   <validation-provider
                     rules="required|email"
@@ -78,7 +78,7 @@
                     </div>
                   </validation-provider>
                   <validation-provider
-                    rules="required|length:5"
+                    rules="required|length:4"
                     v-slot="{ errors }"
                     name="验证码"
                   >
@@ -201,7 +201,6 @@ export default {
           console.log(res)
         }
       })
-      alert('提交成功')
     }
   }
 }

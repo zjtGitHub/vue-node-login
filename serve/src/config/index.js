@@ -1,4 +1,4 @@
-const DB_URL = 'mongodb://test:123456@47.105.212.161:15000/testdb'
+const DB_URL = 'mongodb://localhost/testdb'
 const REDIS = {
   host: '127.0.0.1',
   port: 6379,
