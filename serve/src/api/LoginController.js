@@ -51,7 +51,6 @@ class LoginController {
         if (result) {
             // 验证用户账号密码是否正确
             let checkUserPasswd = false
-            console.log(body.username)
             let user = await User.findOne({ username: body.username })
             if (await bcrypt.compare(body.password, user.password)) {
                 checkUserPasswd = true
