@@ -27,7 +27,7 @@
         >
           <div class="layui-tab-item layui-show">
             <div class="layui-form layui-form-pane">
-              <ValidationObserver v-slot="{ handleSubmit }">
+              <ValidationObserver ref="observer" v-slot="{ handleSubmit }">
                 <form @submit.prevent="handleSubmit(onSubmit)">
                   <ValidationProvider
                     rules="required|email"
@@ -134,6 +134,7 @@
                   </ValidationProvider>
                   <ValidationProvider
                     rules="required|length:4"
+                    ref="codefiled"
                     v-slot="{ errors }"
                     name="验证码"
                   >
@@ -250,7 +251,19 @@ export default {
         sid: this.$store.state.sid
       }).then(res => {
         if (res.code === 200) {
-          alert('注册成功！')
+          this.username = ''
+          this.password = ''
+          this.repassword = ''
+          this.name = ''
+          this.code = ''
+          requestAnimationFrame(() => {
+            this.$refs.observer.reset()
+          })
+          setTimeout(() => {
+            this.$router.push('/login')
+          }, 1000)
+        } else {
+          this.$refs.codefiled.setErrors([res.msg])
         }
       })
     }
